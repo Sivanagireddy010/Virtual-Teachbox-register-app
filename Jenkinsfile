@@ -7,13 +7,12 @@ pipeline {
     environment {
 	    APP_NAME = "register-app-pipeline"
             RELEASE = "1.0.0"
-            DOCKER_USER = "sivanagi"
-            DOCKER_PASS = 'Infy@986658'
+            DOCKER_USER = "ashfaque9x"
+            DOCKER_PASS = 'dockerhub'
             IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
             IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 	    
     }
-  
     stages{
         stage("Cleanup Workspace"){
                 steps {
@@ -23,7 +22,7 @@ pipeline {
 
         stage("Checkout from SCM"){
                 steps {
-                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/Sivanagireddy010/Virtual-Teachbox-register-app'
+                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/Ashfaque-9x/register-app'
                 }
         }
 
@@ -40,9 +39,13 @@ pipeline {
            }
        }
 
-       stage("Build & Push Docker Image") {
-           steps {
-                 script {
+      
+
+     
+
+        stage("Build & Push Docker Image") {
+            steps {
+                script {
                     docker.withRegistry('',DOCKER_PASS) {
                         docker_image = docker.build "${IMAGE_NAME}"
                     }
@@ -54,6 +57,14 @@ pipeline {
                 }
             }
 
-          
-   }
+       }
+
+     
+
+      
+
+      
+    }
+
+  
 }
